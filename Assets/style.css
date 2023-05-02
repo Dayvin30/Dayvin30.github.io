@@ -1,0 +1,25 @@
+/* Fichier CSS pour la page d'accueil de Ventalis */
+body {
+    background-image: url("chemin/vers/votre/image.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.intro {
+    margin-top: 100px;
+    color: #fff;
+    text-align: center;
+}
+
+.intro h1 {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.intro p {
+    font-size: 24px;
+    line-height: 1.5;
+    margin-bottom: 40px;
+}
