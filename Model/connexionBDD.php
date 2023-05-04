@@ -209,7 +209,7 @@ WHERE c.id_utilisateur = :id_utilisateur";
     return $commandes;
 }
 
-function contacter_conseiller($id_utilisateur, $message) {
+function contacter_conseiller($id_utilisateur, $objet, $message) {
     // Se connecter à la base de données
     $pdo = connect();
 
@@ -220,12 +220,14 @@ function contacter_conseiller($id_utilisateur, $message) {
     $stmt->execute();
     $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
     $id_conseiller = $resultat['id_conseiller'];
+    echo $id_conseiller;
 
     // Insérer un nouveau message dans la table messages
-    $requete = "INSERT INTO message (id_utilisateur, id_conseiller, contenu) VALUES (:id_utilisateur, :id_conseiller, :contenu)";
+    $requete = "INSERT INTO message (id_utilisateur, id_conseiller, objet, contenu) VALUES (:id_utilisateur, :id_conseiller, :objet, :contenu)";
     $stmt = $pdo->prepare($requete);
     $stmt->bindValue(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
     $stmt->bindValue(':id_conseiller', $id_conseiller, PDO::PARAM_INT);
+    $stmt->bindValue(':objet', $objet);
     $stmt->bindValue(':contenu', $message);
     $stmt->execute();
 
