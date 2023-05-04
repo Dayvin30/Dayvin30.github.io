@@ -9,7 +9,6 @@
 </head>
 <body>
 <!-- Inclure la navbar de Bootstrap -->
-<?php include 'Vues/navbar.php'; ?>
 
 <div class="container">
     <div class="row">

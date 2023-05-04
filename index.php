@@ -11,8 +11,11 @@
 </head>
 <body>
 <!-- Inclure la navbar de Bootstrap -->
+<?php session_start(); ?>
 <?php include 'Vues/navbar.php'; ?>
-
+<?php echo $_SESSION['id_utilisateur']; ?>
+<?php echo $_SESSION['id_conseiller']; ?>
+<?php echo $_SESSION['email']; ?>
 <!-- Contenu de la page d'accueil ici -->
 <div class="intro">
     <h1>Bienvenue sur le site de Ventalis</h1>
