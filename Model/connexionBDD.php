@@ -236,8 +236,51 @@ function contacter_conseiller($id_utilisateur, $objet, $message) {
 }
 
 
+function getProduits() {
+    // Se connecter à la base de données
+    $pdo = connect();
 
+    // Préparer la requête SQL
+    $requete = "SELECT id, libelle, prix FROM produits";
+    $stmt = $pdo->prepare($requete);
 
+    // Exécuter la requête
+    $stmt->execute();
+
+    // Récupérer les résultats de la requête
+    $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Fermer la connexion à la base de données
+    $pdo = null;
+
+    // Retourner les résultats
+    return $produits;
+}
+
+function trouver_produit_par_id($id) {
+    // Se connecter à la base de données
+    $pdo = connect();
+
+    // Préparer la requête SQL
+    $requete = "SELECT produits.*, categories.nom AS categorie FROM produits INNER JOIN categories ON produits.id_categorie = categories.id WHERE produits.id = :id";
+
+    $stmt = $pdo->prepare($requete);
+
+    // Binder les paramètres de la requête
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+    // Exécuter la requête
+    $stmt->execute();
+
+    // Récupérer le produit trouvé
+    $produit = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Fermer la connexion à la base de données
+    $pdo = null;
+
+    // Retourner le produit trouvé
+    return $produit;
+}
 
 
 

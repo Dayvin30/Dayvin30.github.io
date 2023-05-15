@@ -23,6 +23,7 @@
                     <label for="motdepasse">Mot de passe :</label>
                     <input type="password" class="form-control" id="motdepasse" name="motdepasse" required>
                 </div>
+                <h6><a href="ResetPassword.php">Mot de passe oublié ?</a></h6>
                 <button type="submit" class="btn btn-default">Se connecter</button>
             </form>
         </div>
