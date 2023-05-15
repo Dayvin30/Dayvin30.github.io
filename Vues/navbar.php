@@ -13,7 +13,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="index.php">Accueil</a></li>
-              <?php if(isset($_SESSION['email']) == null) { ?>  <li><a href="Connexion.php">Se connecter</a></li> <?php } ?>
+                <?php if(isset($_SESSION['email']) == null) { ?><li><a href="Connexion.php">Se connecter</a></li><?php } ?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Création <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -36,6 +36,7 @@
                         <li><a href="ContacterConseiller.php">Contacter mon conseiller</a></li>
                     </ul>
                 </li>
+                <li><a href="ListeProduit.php">Liste des produits</a></li>
             </ul>
         </div>
     </div>

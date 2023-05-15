@@ -1,6 +1,5 @@
 <?php
 // Connexion à la base de données MySQL avec PDO
-
 function connect() {
     $servername = "localhost";
     $dbname = "ventalis";
@@ -286,6 +285,45 @@ function trouver_produit_par_id($id) {
 
 
 
+function ajouter_au_panier($id_produit, $quantite) {
+    // Vérifier si le panier existe dans la session
+    if (!isset($_SESSION['panier'])) {
+        $_SESSION['panier'] = array();
+    }
+
+    // Vérifier si le produit est déjà dans le panier
+    if (isset($_SESSION['panier'][$id_produit])) {
+        // Ajouter la quantité à celle existante
+        $_SESSION['panier'][$id_produit] += $quantite;
+    } else {
+        // Ajouter le produit avec la quantité spécifiée
+        $_SESSION['panier'][$id_produit] = $quantite;
+    }
+}
+
+function get_produit_by_id($id_produit) {
+    // Se connecter à la base de données
+    $pdo = connect();
+
+    // Préparer la requête SQL
+    $requete = "SELECT * FROM produits WHERE id = :id";
+    $stmt = $pdo->prepare($requete);
+
+    // Binder les paramètres de la requête
+    $stmt->bindValue(':id', $id_produit, PDO::PARAM_INT);
+
+    // Exécuter la requête
+    $stmt->execute();
+
+    // Récupérer le produit
+    $produit = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Fermer la connexion à la base de données
+    $pdo = null;
+
+    // Retourner le produit
+    return $produit;
+}
 
 
 
