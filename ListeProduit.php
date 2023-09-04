@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'Model/connexionBDD.php';
 
 // Appeler la fonction du modèle pour récupérer les produits

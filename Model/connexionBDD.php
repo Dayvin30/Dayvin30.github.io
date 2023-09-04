@@ -44,6 +44,33 @@ function verifier_existence_utilisateur($email, $motdepasse) {
 
 }
 
+function verifier_existence_conseiller($email, $motdepasse) {
+    // Se connecter à la base de données
+    $pdo = connect();
+
+    // Préparer la requête SQL
+    $requete = "SELECT COUNT(*) FROM conseillers WHERE email = :email and motdepasse = :motdepasse";
+    $stmt = $pdo->prepare($requete);
+
+    // Binder les paramètres de la requête
+    $stmt->bindValue(':email', $email);
+    $stmt->bindValue(':motdepasse', $motdepasse);
+
+    // Exécuter la requête
+    $stmt->execute();
+
+    // Récupérer le résultat de la requête
+    $resultat = $stmt->fetchColumn();
+    if($resultat > 0){
+        return true;
+    }else{
+        return false;
+    }
+
+    // Fermer la connexion à la base de données
+
+}
+
 function ajouter_utilisateur($email, $motdepasse, $nom_societe, $prenom, $nom) {
     // Se connecter à la base de données
     $pdo = connect();
@@ -212,15 +239,18 @@ function contacter_conseiller($id_utilisateur, $objet, $message) {
     // Se connecter à la base de données
     $pdo = connect();
 
-    // Récupérer l'id du conseiller correspondant à l'utilisateur
-    $requete = "SELECT id_conseiller FROM utilisateurs WHERE id = :id_utilisateur";
-    $stmt = $pdo->prepare($requete);
-    $stmt->bindValue(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
-    $stmt->execute();
-    $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
-    $id_conseiller = $resultat['id_conseiller'];
-    echo $id_conseiller;
-
+    if($id_utilisateur != 999999) {
+        // Récupérer l'id du conseiller correspondant à l'utilisateur
+        $requete = "SELECT id_conseiller FROM utilisateurs WHERE id = :id_utilisateur";
+        $stmt = $pdo->prepare($requete);
+        $stmt->bindValue(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
+        $stmt->execute();
+        $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
+        $id_conseiller = $resultat['id_conseiller'];
+        echo $id_conseiller;
+    }else{
+        $id_conseiller = 4;
+    }
     // Insérer un nouveau message dans la table messages
     $requete = "INSERT INTO message (id_utilisateur, id_conseiller, objet, contenu) VALUES (:id_utilisateur, :id_conseiller, :objet, :contenu)";
     $stmt = $pdo->prepare($requete);
@@ -283,48 +313,46 @@ function trouver_produit_par_id($id) {
 
 
 
-
-
-function ajouter_au_panier($id_produit, $quantite) {
-    // Vérifier si le panier existe dans la session
-    if (!isset($_SESSION['panier'])) {
-        $_SESSION['panier'] = array();
-    }
-
-    // Vérifier si le produit est déjà dans le panier
-    if (isset($_SESSION['panier'][$id_produit])) {
-        // Ajouter la quantité à celle existante
-        $_SESSION['panier'][$id_produit] += $quantite;
-    } else {
-        // Ajouter le produit avec la quantité spécifiée
-        $_SESSION['panier'][$id_produit] = $quantite;
-    }
-}
-
-function get_produit_by_id($id_produit) {
+function lister_messages_conseiller($id_conseiller)
+{
     // Se connecter à la base de données
     $pdo = connect();
 
-    // Préparer la requête SQL
-    $requete = "SELECT * FROM produits WHERE id = :id";
+    // Préparer la requête SQL pour récupérer les messages
+    $requete = "SELECT * FROM message WHERE id_conseiller = :id_conseiller";
     $stmt = $pdo->prepare($requete);
-
-    // Binder les paramètres de la requête
-    $stmt->bindValue(':id', $id_produit, PDO::PARAM_INT);
+    $stmt->bindParam(':id_conseiller', $id_conseiller, PDO::PARAM_INT);
 
     // Exécuter la requête
     $stmt->execute();
 
-    // Récupérer le produit
-    $produit = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Récupérer les résultats de la requête
+    $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Fermer la connexion à la base de données
     $pdo = null;
 
-    // Retourner le produit
-    return $produit;
+    // Retourner les résultats
+    return $resultats;
 }
 
+
+
+function repondre_message($id_utilisateur, $id_conseiller, $objet, $message) {
+    // Se connecter à la base de données
+    $pdo = connect();
+
+    $requete = "INSERT INTO message (id_utilisateur, id_conseiller, objet, contenu) VALUES (:id_utilisateur, :id_conseiller, :objet, :contenu)";
+    $stmt = $pdo->prepare($requete);
+    $stmt->bindValue(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
+    $stmt->bindValue(':id_conseiller', $id_conseiller, PDO::PARAM_INT);
+    $stmt->bindValue(':objet', $objet);
+    $stmt->bindValue(':contenu', $message);
+    $stmt->execute();
+
+    // Fermer la connexion à la base de données
+    $pdo = null;
+}
 
 
 

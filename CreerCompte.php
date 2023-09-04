@@ -1,7 +1,8 @@
 <?php
+session_start();
+
 require_once 'Model/connexionBDD.php';
 require_once 'Vues/vCreerCompte.php';
-
 
 if (isset($_POST['login'], $_POST['mot_de_passe'], $_POST['nom_societe'], $_POST['prenom'], $_POST['nom'])) {
     // Récupérer les données saisies dans le formulaire

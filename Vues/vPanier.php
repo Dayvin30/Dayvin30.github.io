@@ -9,45 +9,51 @@
 </head>
 <body>
 <!-- Inclure la navbar de Bootstrap -->
-<?php
-session_start();
-include 'Vues/navbar.php'; ?>
+<?php include 'navbar.php'; ?>
 
 <div class="container">
     <h2>Panier</h2>
+    <?php
+    $produits_panier = obtenir_contenu_panier();
 
-    <?php if (isset($_SESSION['panier']) && !empty($_SESSION['panier'])) : ?>
+    if (count($produits_panier) > 0) :
+        ?>
         <table class="table">
             <thead>
             <tr>
                 <th>Produit</th>
                 <th>Quantité</th>
                 <th>Prix unitaire</th>
-                <th>Prix total</th>
+                <th>Total</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($_SESSION['panier'] as $id_produit => $quantite) : ?>
-                <?php $produit = get_produit_by_id($id_produit); ?>
+            <?php
+            foreach ($produits_panier as $id_produit => $quantite) :
+                $produit = get_produit_by_id($id_produit);
+                ?>
                 <tr>
                     <td><?php echo $produit['libelle']; ?></td>
                     <td><?php echo $quantite; ?></td>
                     <td><?php echo $produit['prix']; ?></td>
                     <td><?php echo $produit['prix'] * $quantite; ?></td>
+                    <td>
+                        <a href="panier.php?action=supprimer&id=<?php echo $id_produit; ?>"
+                           class="btn btn-danger btn-sm">Supprimer</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
 
         <div class="text-right">
-            <p>Total du panier : <?php echo calculer_total_panier(); ?></p>
+            <p>Total du panier : <?php echo calculer_total_panier(); ?> €</p>
+            <p>Nombre total d'articles : <?php echo count($produits_panier); ?></p>
+            <a href="panier.php?action=vider" class="btn btn-danger">Vider le panier</a>
         </div>
-
-        <div class="text-center">
-            <a href="ValiderPanier.php" class="btn btn-primary">Valider le panier</a>
-        </div>
-    <?php else : ?>
-        <p>Votre panier est vide.</p>
+    <?php else: ?>
+        <p>Votre panier est vide. Ajoutez des produits en explorant notre catalogue.</p>
     <?php endif; ?>
 </div>
 </body>

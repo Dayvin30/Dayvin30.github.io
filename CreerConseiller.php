@@ -1,6 +1,8 @@
 <?php
+session_start();
 require_once 'Model/connexionBDD.php';
 require_once 'Vues/vCreerConseiller.php';
+
 if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && isset($_POST['motdepasse'])) {
     // Récupérer les données saisies dans le formulaire
     $nom = $_POST['nom'];

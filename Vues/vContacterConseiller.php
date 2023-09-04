@@ -12,7 +12,7 @@
 <?php include 'Vues/navbar.php'; ?>
 
 <div class="container">
-    <h2>Contacter le conseiller</h2>
+    <h2>Contacter votre conseiller</h2>
     <form action="ContacterConseiller.php" method="POST">
         <div class="form-group">
             <label for="sujet">Sujet :</label>

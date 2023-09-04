@@ -2,7 +2,6 @@
 session_start();
 require_once 'Model/connexionBDD.php';
 
-$_SESSION['email'] = 'dupont@gmail.com';
 if (!isset($_SESSION['email'])) {
     header('Location: index.php');
     exit();
