@@ -1,6 +1,6 @@
 /* Fichier CSS pour la page d'accueil de Ventalis */
 body {
-    background-image: url("chemin/vers/votre/image.jpg");
+    font-family: Arial, Helvetica, sans-serif;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
