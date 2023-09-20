@@ -24,6 +24,9 @@ if (isset($_POST['email']) && isset($_POST['motdepasse'])) {
             $_SESSION['role'] = 'utilisateur';
             header('Location: index.php');
         }
+        else{
+            echo "Erreur lors de la connexion";
+        }
     }else{
         if(verifier_existence_conseiller($_POST['email'], $_POST['motdepasse'])){
             $_SESSION['email'] = $_POST['email'];
@@ -52,8 +55,4 @@ if (isset($_POST['email']) && isset($_POST['motdepasse'])) {
         }
     }
     // Récupérer les données saisies dans le formulaire
-
-}
-else {
-    echo "Erreur de connexion";
 }
