@@ -12,7 +12,7 @@ if (isset($_POST['id_produit']) && isset($_POST['quantite'])) {
     ajouter_au_panier($id_produit, $quantite);
     var_dump($_SESSION['panier']);
     // Rediriger vers la page du panier ou une autre page
-    header('Location: panier.php');
+    header('Location: Panier.php');
 
 }
 

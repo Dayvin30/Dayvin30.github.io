@@ -2,3 +2,4 @@
 *.msi
 # Fichiers de configuration
 config.php
+/vendor/

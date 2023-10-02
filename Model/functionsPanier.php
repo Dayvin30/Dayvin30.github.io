@@ -1,6 +1,6 @@
 <?php
-session_start();
 
+session_start();
 // Fonction pour ajouter un produit au panier
 function ajouter_au_panier($id_produit, $quantite = 1) {
     // Vérifier si le panier existe dans la session
@@ -69,5 +69,47 @@ function calculer_total_panier() {
     }
 
     return $total;
+}
+
+function creer_commande($id_utilisateur, $date, $prix, $statut, $id_produit) {
+    // Se connecter à la base de données
+    $pdo = connectBDD();
+
+    // Préparer la requête SQL
+    $requete = "INSERT INTO commandes (id_utilisateur, date_commande, prix, statut, id_produit) VALUES (:id_utilisateur, :date_commande, :prix, :statut, :id_produit)";
+    $stmt = $pdo->prepare($requete);
+    echo $requete;
+
+    // Binder les paramètres de la requête
+    $stmt->bindValue(':id_utilisateur', $id_utilisateur);
+    $stmt->bindValue(':date_commande', $date);
+    $stmt->bindValue(':prix', $prix);
+    $stmt->bindValue(':statut', $statut);
+    $stmt->bindValue(':id_produit', $id_produit);
+
+    // Exécuter la requête
+    $stmt->execute();
+
+    // Fermer la connexion à la base de données
+    $pdo = null;
+
+    retirer_du_panier($id_produit);
+}
+
+function connectBDD() {
+    $servername = "localhost";
+    $dbname = "ventalis";
+    $username = "root";
+    $password = "";
+
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $conn;
+    } catch(PDOException $e) {
+        die("Connexion échouée : " . $e->getMessage());
+
+    }
+
 }
 ?>

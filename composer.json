@@ -1,0 +1,22 @@
+{
+    "name": "dayvi/ventilis",
+    "autoload": {
+        "psr-4": {
+            "Dayvi\\Ventilis\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dayvi\\Ventilis\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dayvin30",
+            "email": "92032342+Dayvin30@users.noreply.github.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^10.3"
+    }
+}

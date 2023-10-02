@@ -17,17 +17,16 @@ function connect() {
 
 }
 
-function verifier_existence_utilisateur($email, $motdepasse) {
+function verifier_existence_utilisateur($email) {
     // Se connecter à la base de données
     $pdo = connect();
 
     // Préparer la requête SQL
-    $requete = "SELECT COUNT(*) FROM utilisateurs WHERE email = :email and motdepasse = :motdepasse";
+    $requete = "SELECT COUNT(*) FROM utilisateurs WHERE email = :email";
     $stmt = $pdo->prepare($requete);
 
     // Binder les paramètres de la requête
     $stmt->bindValue(':email', $email);
-    $stmt->bindValue(':motdepasse', $motdepasse);
 
     // Exécuter la requête
     $stmt->execute();
@@ -44,17 +43,15 @@ function verifier_existence_utilisateur($email, $motdepasse) {
 
 }
 
-function verifier_existence_conseiller($email, $motdepasse) {
+function verifier_existence_conseiller($email, $pdo) {
     // Se connecter à la base de données
-    $pdo = connect();
 
     // Préparer la requête SQL
-    $requete = "SELECT COUNT(*) FROM conseillers WHERE email = :email and motdepasse = :motdepasse";
+    $requete = "SELECT COUNT(*) FROM conseillers WHERE email = :email";
     $stmt = $pdo->prepare($requete);
 
     // Binder les paramètres de la requête
     $stmt->bindValue(':email', $email);
-    $stmt->bindValue(':motdepasse', $motdepasse);
 
     // Exécuter la requête
     $stmt->execute();
@@ -160,6 +157,8 @@ function creer_produit($libelle, $image, $description, $prix, $categorie) {
     // Fermer la connexion à la base de données
     $pdo = null;
 }
+
+
 
 function ajouter_categorie($nom) {
     // Se connecter à la base de données

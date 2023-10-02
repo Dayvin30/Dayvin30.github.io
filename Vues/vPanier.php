@@ -25,7 +25,8 @@
                 <th>Quantité</th>
                 <th>Prix unitaire</th>
                 <th>Total</th>
-                <th>Action</th>
+                <th>Supprimer</th>
+                <th>Valider l'article</th>
             </tr>
             </thead>
             <tbody>
@@ -42,6 +43,8 @@
                         <a href="panier.php?action=supprimer&id=<?php echo $id_produit; ?>"
                            class="btn btn-danger btn-sm">Supprimer</a>
                     </td>
+                    <td>
+                        <a class="btn btn-primary" href="ValiderCommande.php?id=<?php echo $_SESSION['id_utilisateur'] ?>&date=<?php echo date("Y-m-d-H-i-s") ?>&prix=<?php echo $produit ['prix'] * $quantite ?>&statut=CREE&idproduit=<?php echo $id_produit ?>">Commander</a></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
